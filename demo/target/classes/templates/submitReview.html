@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Review</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+CREATE A REVIEW
+		<br>
+		<br>
+		<form action="#" th:action="@{/submitReview}" th:object="${custReview}" method="post">
+			<label for="rest">Choose a Restaurant:</label>
+          		<select name="rest" id="restaurant" th:field="*{restid}">
+  				<option 
+      				th:each="dropdownValue: ${restList}"
+      				th:value="${dropdownValue.getRestid()}"
+      				th:text="${dropdownValue.getRname()}" ></option>
+			</select><br><br>
+			Title <input type="text" id="reviewTitle" name="reviewTitle" th:field="*{reviewTitle}" value=""><br><br>
+			Description <input type="text" id="reviewDesc" name="reviewDesc" th:field="*{reviewDesc}" value=""><br><br>
+			Rating <input id=burger type=number min=1 max=5 value=1 th:field="*{rating}"><br><br>
+			Email <input type="text" id="reviewerEmail" name="reviewerEmail" th:field="*{custEmail}" value=""><br><br>
+			<input type="submit" value="Submit Review"><br><br>
+			<label><A HREF="displayEmployees">Click here to go back to Home!</A></label>    
+			</form>
+</body>
+</html>

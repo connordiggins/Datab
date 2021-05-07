@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Order</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+CREATE AN ORDER
+		<br>
+		<br>
+		<form action="#" th:action="@{/submitOrder}" th:object="${restOrder}" method="post">
+		
+			  Email <input type="text" id="custEmail" name="custEmail" th:field="*{custEmail}" value=""><br><br>
+			  Delivery? (Y/N) <input type="text" id="delivery" name="delivery" th:field="*{delivery}" value="N"><br><br>
+			  Pickup? (Y/N) <input type="text" id="pickup" name="pickup" th:field="*{pickup}" value="N"><br><br>
+			  Dine in? (Y/N) <input type="text" id="dineIn" name="dineIn" th:field="*{dineIn}" value="N"><br><br>
+			
+			<input type="submit" value="Submit Order"><br><br>
+			<label><A HREF="displayEmployees">Click here to go back to Home!</A></label>    
+			</form>
+</body>
+</html>

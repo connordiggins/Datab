@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" href="css/Home.css" />
+  <ul class="tabs">
+    
+    <li class="tab">
+        <input type="radio" name="tabs" checked="checked" id="tab1" />
+        <label for="tab1">Restaurants</label>
+        <div id="tab-content1" class="content">
+          <h1>Restaurants</h1>
+          <hr/>
+          <br/>
+          <form>
+			  <br>
+			  <input type="text" id="query" onkeyup="search()" placeholder="Search for restaurants..." title="Type in a restaurant name">
+			  <label for="query"></label><br>
+		  </form>
+		  <br/>
+          <table id="queryTable" style="width:100%">
+		  <tr>
+		    <th>Restaurant Name</th>
+		    <th>Dining Type</th>
+		   	<th>Address</th>
+		   	<th>Hours</th>
+			<th>Price</th>
+			<th>Delivery?</th>
+			<th>Outdoor Seating?</th>
+		    <th>Phone Number</th>
+		   	<th>Email</th>
+		  </tr>
+		  <tr th:each="restaurant : ${restList}">
+			<td th:text="${restaurant.getRname()}"></td>
+			<td th:text="${restaurant.getDiningType()}"></td>
+			<td th:text="${restaurant.getAddress()}"></td>
+			<td th:text="${restaurant.getHours()}"></td>
+			<td th:text="${restaurant.getPrice()}"></td>
+			<td th:text="${restaurant.getDeliveryFlag()}"></td>
+			<td th:text="${restaurant.getOutdoorSeatingFlag()}"></td>
+			<td th:text="${restaurant.getPhone()}"></td>
+			<td th:text="${restaurant.getEmail()}"></td>
+		  </tr>
+		</table>
+		<script>
+		function search() {
+			var input, filter, table, tr, td, i, txtValue;
+			input = document.getElementById("query");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("queryTable");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[0];
+				if (td) {
+					txtValue = td.textContent || td.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+		</script>
+        </div>
+    </li>
+    
+    <li class="tab">
+      <input type="radio" name="tabs" id="tab2" />
+      <label for="tab2">Reviews</label>   
+      <div id="tab-content2" class="content">
+          <h1>Reviews</h1>
+          <hr/>
+          <br/>
+          <table style="width:100%">
+		  <tr>
+		  	<th>Restaurant</th>
+		    <th>Title</th>
+		    <th>Description</th>
+		    <th>Rating</th>
+		    <th>Date</th>
+		    <th>Name</th>
+		  </tr>
+		  <tr th:each="review : ${reviewList}">
+		  	<td th:text="${review.getRestaurantReviewed()}"></td>
+			<td th:text="${review.getReviewTitle()}"></td>
+			<td th:text="${review.getReviewDesc()}"></td>
+			<td th:text="${review.getRating()}"></td>
+			<td th:text="${review.getReviewDate()}"></td>
+			<td th:text="${review.getReviewerName()}"></td>
+		  </tr>
+		</table>
+		<br>
+		<label><A HREF="submitReview">Click here to submit a review!</A></label>   
+       </div>
+    </li>
+
+     <li class="tab">
+      <input type="radio" name="tabs" id="tab3" />
+      <label for="tab3">Orders</label>   
+      <div id="tab-content3" class="content">
+          <h1>Orders</h1>
+          <hr/>
+          <br/>
+			<form th:action="@{/insertOrder}" method="post">
+			<label for="restaurant">Choose a Restaurant:</label>
+          	<select name="restaurant" id="restaurant">
+  				<option 
+      				th:each="dropdownValue: ${restList}"
+      				th:value="${dropdownValue.getRestid()}"
+      				th:text="${dropdownValue.getRname()}" ></option>
+			</select>
+			  <br>
+			  <input type="radio" id="delivery" name="service" value="delivery">
+			  <label for="delivery">Delivery</label><br>
+			  Address <input type="text" id="delivAddress" name="delivAddress" value="">
+			  <label for="delivAddress"></label><br>
+			  <input type="radio" id="pickup" name="service" value="pickup">
+			  <label for="pickup">Pickup</label><br>
+			</form>
+			<br>
+			<table style="width:100%">
+		  <tr>
+		    <th>Food</th>
+		    <th>Price</th>
+		    <th>Quantity</th>
+		  </tr>
+		  <tr>
+		    <td>Burger</td>
+		    <td>6.25</td>
+		    <td>
+		    	<input id=burger type=number min=0 max=20 value=0>
+		    </td>	    
+		  </tr>
+		  <tr>
+		    <td>Sandwich</td>
+		    <td>4.75</td>
+		    <td>
+		    	<input id=sandwich type=number min=0 max=20 value=0>
+		    </td>	    
+		  </tr>
+		  <tr>
+		    <td>Taco</td>
+		    <td>2.50</td>
+		    <td>
+		    	<input id=taco type=number min=0 max=20 value=0>
+			</td>	    
+		  </tr>	    
+		</table>
+		<br>
+		<label><A HREF="submitOrder">Click here to submit an order for this restaurant!</A></label>   
+      </div>
+    </li>
+    
+    <li class="tab">
+      <input type="radio" name="tabs" id="tab5" />
+      <label for="tab5"><A HREF="login.html">Logout</A></label>   
+    </li>
+    
+  </ul>
+ </html>
